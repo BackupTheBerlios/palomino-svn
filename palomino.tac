@@ -8,6 +8,10 @@ try:
 except:
     log.warn('psyco is not available, will not optimize.')
 
+from palomino import initStore 
+initStore.makeAPoolAndStuff()
+
+
 ms = service.MultiService()
 #ms.addService(internet.TCPServer(54321, PBFactory))
 ms.setServiceParent(application)

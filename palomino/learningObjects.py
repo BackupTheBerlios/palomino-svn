@@ -5,9 +5,6 @@ from atop import store
 class CategoryIndex(store.StringIndex):
     """Each Lo is indexed for searching by category."""
 
-class CreationDateIndex(store.DateIndex):
-    """Each Lo is indexed for searching by creationDate."""
-
 class KeywordIndex(store.StringIndex):
     """Each Lo is indexed for searching by keywords."""
 
@@ -173,7 +170,6 @@ class LoBase(store.Item):
     
     _categories = store.indexedList(CategoryIndex)
     _keywords = store.indexedList(KeywordIndex)
-    _creationDate = store.indexed(CreationDateIndex)
     
     #see dublincore.org, dublincore is the metadata standard.
     dublinCore_Title       = store.indexed(TitleIndex)
@@ -195,7 +191,7 @@ class LoBase(store.Item):
    
     def __init__(self, st):
         store.Item.__init__(self, st)
-        self._creationDate = time.time()
+        self.dublinCore_Date = time.time()
         self._categories = []
 
     def categorise(self, categories):
