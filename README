@@ -2,13 +2,15 @@ About:
 
 Hi, This is Palomino, a Learning Object server. Learning Objects are a standard 
 for sharing educational content between networked applications reguardless of 
-platform or language.
+platform or language. 
+
+This is a total re-write + feature add of an application I wrote in 2000-2001 in
+PHP-MySQL *puke* for a learning institution in Australia. 
 
 Status:
 
 The status of this project is currently pre-alpha/planning, what this means is 
-that it doesnt work, its all up in the air, and if you want to get in on the 
-ground floor of a project like this, now is the time to sign up ;)
+that it doesnt work, its all up in the air.
 
 Technologies:
 
@@ -33,4 +35,117 @@ This will surely change over time, but for now:
 /                   current palomino source
 /sandbox            experementing/testing
 /atop               svn:externals link to atop svn
+
+
+Plan: 
+
+Data types:
+
+LearningObject, this is the fundamental type in the whole system, subclasses of
+LearningObject provide 'atoms' of information, be it text, an image, a movie or
+a collection of other LearningObjects. All learning objects have standard 
+DublinCore meta fields.
+
+Fundamental LearningObject subclasses:
+LoBase 
+    |
+    +- LoText 
+    |   |
+    |   +- LoTextTitle
+    |   +- LoTextParagraph
+    |   +- LoTextList
+    |   
+    +- LoMedia
+    |   |
+    |   +- LoMediaImage
+    |   +- LoMediaMovie
+    |   +- LoMediaAudio
+    |   
+    +- LoConstruct (composite of other LOs)
+        |
+        +- LoConstructCourse
+        +- LoConstructLesson
+        +- LoConstructSection
+
+Users, groups, roles, permissions:
+
+Users need to be in groups, groups should nest, and users have a role within a 
+group. Some basic roles within a group might be 'teacher', 'student', 
+'observer' etc. Because groups will be nestable there is the flexibility to  
+provide any level of user management, I imagine it will default to something 
+like:
+
+Organisation +--> Class ----> User 
+             |
+             +--> Admin ----> User
+
+Basic roles would be: 
+
+teacher 
+student
+supervisor
+administrator
+Author
+
+Roles provide a set of permissions within the context of an LoConstruct, 
+assigned to a group, for example:
+
+Group 'Foo', which is a class of students, with one teacher, has been assigned 
+access to an LoConstructCourse 'Boing water'. Within the group, Users 'Joe', 
+'Christina' and 'Rey' have been assigned a role 'Student', while 'Angus' has
+been assigned a role of 'teacher'.
+
+As students of Group Foo, Joe, Christina and Rey might have access to view 
+everything within the Boiling Water course of type LoConstructLesson, while 
+Angus has access to other, teacher oriented objects.
+
+Core Features:
+
+LO and user/group sources stored in Atop.
+
+PB interface to logic, with Cred, primary client interface.
+
+API to provide the ability to: 
+
+* administer groups/users/roles.
+
+* create, modify, display and archive LOs.
+
+* export and import data.
+
+
+Client Interfaces:
+
+Opensource clients:
+
+Web-based interface using Nevow, should access the API served via PB and
+remain abstracted from internals as much as possible. Should be capable 
+and pleasant to use, providing access to all fundamental features via its 
+html interface.
+
+ClosedSource? investigate Dual licence? clients:
+
+pyGTK-based client designed to run from a CD or DVD. Provides access to 
+all features of the system, as well as cached media files for courses on 
+the CD. Cached media will provide low-latency access that would normally
+be impossible to remote/low-bandwidth students.
+
+Provides advanced GUI editing/authoring via an inline editor/OOo interface.
+Exporting courses large media content to ISO format with client bundled in 
+for CD/DVD creation. Will provide realtime communication between Users via 
+built-in chat facility.
+
+
+Features wishlist: 
+
+Alternate user sources, (ldap, SQL etc, perhaps implement as 'IUserSource'?)
+
+API for searching and retrieving LOs, in some form of nestable XML? over xml-rpc 
+for third-party use.
+
+Abity to Import/Export LOs, also an IImportAdapter for building bridges to third
+party LO sources.
+
+Investigate SchoolTool? 
+
 
