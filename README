@@ -1,0 +1,36 @@
+About:
+
+Hi, This is Palomino, a Learning Object server. Learning Objects are a standard 
+for sharing educational content between networked applications reguardless of 
+platform or language.
+
+Status:
+
+The status of this project is currently pre-alpha/planning, what this means is 
+that it doesnt work, its all up in the air, and if you want to get in on the 
+ground floor of a project like this, now is the time to sign up ;)
+
+Technologies:
+
+Python:
+
+python.org, python is a high level language with a neat syntax and powerful 
+archetecture. If your not familiar with python, check it out, its great.
+
+Twisted:
+
+twistedmatrix.com, twisted is a comprehensive async networking framework 
+that is ideal for this type of applicaiton.
+
+Atop:
+
+divmod.org, Atop is a transactional OODB based on python-bsddb.
+
+Directory Structure:
+
+This will surely change over time, but for now:
+
+/                   current palomino source
+/sandbox            experementing/testing
+/atop               svn:externals link to atop svn
+
